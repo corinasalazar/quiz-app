@@ -1,3 +1,3 @@
 # quiz-app
 
-My partners were Corina Salazar amd Arjay Jean
+My partners were Corina Salazar and Arjay Jean
