@@ -76,7 +76,7 @@ function questionPage() {
         <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[3]}">
         <label>${currentQuestion.answers[3]}</label><br>
 
-        <button type="submit">Submit</button>
+        <button id="submit">Submit</button>
       </form>
     </div>
     `;
@@ -84,26 +84,43 @@ function questionPage() {
   return questionPage;
 }
 //you should be shown a question with a list of answers
-
+//users should be able to select an answer
 function handleAnswerSubmit() {
   $("main").on("submit", "form", function (evt) {
     evt.preventDefault();
-    store.questionNumber++;
+    
     let answer = $(`input[name='answer']:checked`).val();
-    if (answer === store.questions[])
-      render();
-
+    let currentCorrectAnswer = store.questions[store.questionNumber].correctAnswer;
+    
+    if (answer === currentCorrectAnswer) {
+      $("main").html(renderCorrectAnswerPage())
+    } else{
+      $("main").html(renderIncorrectAnswerPage())
+    } 
+      store.questionNumber++;    
   })
-
+  render();
 }
-
-//users should be able to select an answer
-function answerPage(){
-  if(answer === store.questions.correctAnswer)
-}
-
-
 //app should verify whether answer is correct
+function renderCorrectAnswerPage() {
+  let correctAnswerPage = `<div class="content">
+  <h2>Correct</h2> <button id="next-question">Next Question</button></div>`
+  return correctAnswerPage;
+}
+
+function renderIncorrectAnswerPage(){
+  let incorrectAnswerPage = `<div class="content">
+  <h2>Sorry Bud</h2> <p>The correct answer was ${store.questions[store.questionNumber].correctAnswer} better luck next time!</p> <button id="next-question">Next Question</button></div>`
+  return incorrectAnswerPage;
+}
+
+function handleNextQuestion(){
+  $(`main`).on(`click`, `#next-question`, function () {
+    store.questionNumber++;
+    render();
+  })
+}
+
 
 //when correct, user will be taken to a correct answer page with the correct answer highlighted green, and 1 will be added to total number correct
 
@@ -129,7 +146,7 @@ function main() {
   render();
   handleStartQuiz();
   handleAnswerSubmit();
-
+  
 }
 
 
