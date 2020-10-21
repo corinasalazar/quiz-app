@@ -25,16 +25,71 @@ const store = {
     score: 0,
 };
 
-function renderQuiz(){
-    let renderQuiz = 
+function renderStartPage(){
+    let startPage = 
+    `<div class="content">
+      <h2>Here you GO!!</h2>
+      <p>Are You Ready?</p>
+      <button id="start">Get Started</button> 
+    </div>`;
+    return startPage;
 }
 // quiz start page should render
 
+function handleStartQuiz() {
+    $(`main`).on(`click`, `#start`, function(){
+        store.quizStarted=true;
+        render();
+    })
+}
+
 // you should be able to start the quiz by pressing a start button
 
+
+
+function questionPage() {
+    let currentQuestion = store.questions[store.questionNumber];
+
+    let questionPage = `
+    <div class="content">
+      <h2>${currentQuestion.question}</h2>
+      <form>
+        <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[0]}">
+        <label>${currentQuestion.answers[0]}</label><br>
+
+        <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[1]}">
+        <label>${currentQuestion.answers[1]}</label><br>
+
+        <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[2]}">
+        <label>${currentQuestion.answers[2]}</label><br>
+
+        <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[3]}">
+        <label>${currentQuestion.answers[3]}</label><br>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    `;
+
+    return questionPage;
+}
 //you should be shown a question with a list of answers
 
+function handleAnswerSubmit(){
+    $("main").on("submit", "form", function(evt){
+      evt.preventDefault();
+        store.questionNumber++;
+        let answer = $(`input[name='answer']:checked`).val();
+        //if (answer === store.questions[])
+        render();
+
+    })
+
+}
+
 //users should be able to select an answer
+
+
 
 //app should verify whether answer is correct
 
@@ -47,3 +102,23 @@ function renderQuiz(){
 //once quiz is complete user will be displayed a final page stating that the quiz is over and will also display final score 
 
 //A button to restart the quiz will be displayed on final page
+
+function render(){
+  console.log
+      if(store.quizStarted ===false){
+        $('main').html(renderStartPage());
+      } else if(store.quizStarted){
+        $('main').html(questionPage());
+      
+      }
+}
+
+function main(){
+    render();
+    handleStartQuiz();
+    handleAnswerSubmit();
+
+}
+
+
+$(main);
