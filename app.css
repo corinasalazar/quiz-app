@@ -1,0 +1,43 @@
+html{
+    font-family: sans-serif;
+    color: #3d3d3d;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+main{
+    align-items: center;
+    justify-content: center;
+}
+
+button{
+    background-color:#c72222;
+    padding: 10px 20px;
+    border: 0px solid #c72222;
+    color: white;
+    font-weight: bold;
+}
+
+.correct-answer{
+    background-color: rgba(0, 128, 0, 0.56);
+}
+
+.incorrect-answer{
+    background-color:rgba(255, 1, 1, 0.55);
+}
+
+form div{
+    margin: 5px 0;
+}
+
+p {
+    margin-top: 40px;
+}
+
+
