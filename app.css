@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
+/*@import url('https://fonts.googleapis.com/css?family=Black+Ops+One');*/
 html{
-    font-family: sans-serif;
+    font-family: 'Orbitron', sans-serif;
     color: #3d3d3d;
 }
 
@@ -9,27 +11,32 @@ body{
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background-image: url('images/background-img.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 main{
     align-items: center;
-    justify-content: center;
+    justify-content: center; 
+    background-color: rgba(242, 75, 30, 85%);
+    padding: 30px 40px;
+    width: 100%;
+}
+
+.content{
+    width: 90%;
+    margin: 0 auto;
 }
 
 button{
-    background-color:#c72222;
+    background-color:black;
     padding: 10px 20px;
-    border: 0px solid #c72222;
+    border: 0px solid black;
     color: white;
     font-weight: bold;
-}
-
-.correct-answer{
-    background-color: rgba(0, 128, 0, 0.56);
-}
-
-.incorrect-answer{
-    background-color:rgba(255, 1, 1, 0.55);
+    margin-top: 20px;
 }
 
 form div{
@@ -40,4 +47,20 @@ p {
     margin-top: 40px;
 }
 
+h1{
+    color: white;
+    text-shadow: 2px 2px #ff0000;
+    font-size: 40px;
+    text-align: center;
+}
 
+#answer{
+    margin-top: 10px;
+}
+
+
+@media all and (min-width: 600px){
+    .content{
+        width: 50%;
+    }
+}

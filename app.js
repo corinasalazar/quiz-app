@@ -35,6 +35,7 @@ const store = {
   score: 0,
 };
 
+// quiz start page should render
 function renderStartPage() {
   let startPage =
     `<div class="content">
@@ -44,8 +45,8 @@ function renderStartPage() {
     </div>`;
   return startPage;
 }
-// quiz start page should render
 
+// moves us to the first quiz page after button press
 function handleStartQuiz() {
   $(`main`).on(`click`, `#start`, function () {
     store.quizStarted = true;
@@ -53,43 +54,34 @@ function handleStartQuiz() {
   })
 }
 
-// you should be able to start the quiz by pressing a start button
-
-
-
+// lays out the question page template
 function questionPage() {
-
   if (store.questionNumber === store.questions.length) {
     return renderFinalPage();
   }
 
   let currentQuestion = store.questions[store.questionNumber];
-
   let questionPage = `
     <div class="content">
-      <h2>${currentQuestion.question}</h2>
+      <h2>Question ${store.questionNumber+1}: ${currentQuestion.question}</h2>
+      <p>Your score: ${store.score}/5</p>
       <form>
         <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[0]}" required>
         <label>${currentQuestion.answers[0]}</label><br>
-
         <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[1]}" required>
         <label>${currentQuestion.answers[1]}</label><br>
-
         <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[2]}" required>
         <label>${currentQuestion.answers[2]}</label><br>
-
         <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[3]}" required>
         <label>${currentQuestion.answers[3]}</label><br>
-
         <button id="submit">Submit</button>
       </form>
     </div>
     `;
-
   return questionPage;
 }
-//you should be shown a question with a list of answers
-//users should be able to select an answer
+
+// waits for user to hit submit button, renders to correct or incorrect page
 function handleAnswerSubmit() {
   $("main").on("submit", "form", function (evt) {
     evt.preventDefault();
@@ -98,7 +90,8 @@ function handleAnswerSubmit() {
     let currentCorrectAnswer = store.questions[store.questionNumber].correctAnswer;
 
     if (answer === currentCorrectAnswer) {
-      $("main").html(renderCorrectAnswerPage())
+      store.score++;
+      $("main").html(renderCorrectAnswerPage());
     } else {
       $("main").html(renderIncorrectAnswerPage())
     }
@@ -106,53 +99,50 @@ function handleAnswerSubmit() {
   })
   render();
 }
-//app should verify whether answer is correct
+
+// lays out template for correct answer
 function renderCorrectAnswerPage() {
   let correctAnswerPage = `<div class="content">
-  <h2>Correct</h2> <form> <button id="next-question">Next Question</button> </form> </div>`
+  <h2>Correct!!</h2> 
+  <p>Your score: ${store.score}/5</p>
+  <form> <button id="next-question">Next Question</button> </form> </div>`
   return correctAnswerPage;
 }
 
+// lays out template for incorrect answer
 function renderIncorrectAnswerPage() {
   let incorrectAnswerPage = `<div class="content">
-  <h2>Sorry Bud</h2> <p>The correct answer was ${store.questions[store.questionNumber].correctAnswer} better luck next time!</p> <form> <button id="next-question">Next Question</button> </form> </div>`
+  <h2>Sorry Bud</h2> <p>The correct answer was ${store.questions[store.questionNumber].correctAnswer}. Better luck next time!</p> <p>Your score: ${store.score}/5</p><form> <button id="next-question">Next Question</button> </form> </div>`
   return incorrectAnswerPage;
 }
 
+// handles to move from correct/incorrect pages back to question pages
 function handleNextQuestion() {
   $(`main`).on(`click`, `#next-question`, function (e) {
     e.preventDefault();
     $("main").html(store.questions[store.questionNumber])
     render();
-  })
+  });
 }
 
+// lays out template for the final score page
 function renderFinalPage() {
   let finalPage = `<div class="content">
-  <h2>Fin</h2> <p>Your final score is ${store.score}/5... hope you are proud of yourself</p>
+  <h2>Fin</h2> <img src="images/end-quiz.gif" alt="Cars driving, split off at fork" /><p>Your final score is ${store.score}/5... hope you are proud of yourself</p>
    <button id="restart">Restart</button> </div>`
   return finalPage;
 }
 
+// waits for a button click to take you back to the start of the quiz
 function handleFinalPage() {
   $(`main`).on(`click`, `#restart`, function () {
     store.quizStarted = false;
     store.questionNumber = 0;
     store.score = 0;
     render();
-  })
+  });
 }
 
-
-//when correct, user will be taken to a correct answer page with the correct answer highlighted green, and 1 will be added to total number correct
-
-//when incorrect, user will be taken to a incorrect answer page with the correct answer highlighted green and the chosen answer highlighted red
-
-//user should be able to proceed to next question with a next question button
-
-//once quiz is complete user will be displayed a final page stating that the quiz is over and will also display final score 
-
-//A button to restart the quiz will be displayed on final page
 
 function render() {
   if (store.quizStarted === false) {
