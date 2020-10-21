@@ -58,22 +58,27 @@ function handleStartQuiz() {
 
 
 function questionPage() {
+
+  if (store.questionNumber === store.questions.length) {
+    return renderFinalPage();
+  }
+
   let currentQuestion = store.questions[store.questionNumber];
 
   let questionPage = `
     <div class="content">
       <h2>${currentQuestion.question}</h2>
       <form>
-        <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[0]}">
+        <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[0]}" required>
         <label>${currentQuestion.answers[0]}</label><br>
 
-        <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[1]}">
+        <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[1]}" required>
         <label>${currentQuestion.answers[1]}</label><br>
 
-        <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[2]}">
+        <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[2]}" required>
         <label>${currentQuestion.answers[2]}</label><br>
 
-        <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[3]}">
+        <input type="radio" id="answer" name="answer" value="${currentQuestion.answers[3]}" required>
         <label>${currentQuestion.answers[3]}</label><br>
 
         <button id="submit">Submit</button>
@@ -88,35 +93,52 @@ function questionPage() {
 function handleAnswerSubmit() {
   $("main").on("submit", "form", function (evt) {
     evt.preventDefault();
-    
+
     let answer = $(`input[name='answer']:checked`).val();
     let currentCorrectAnswer = store.questions[store.questionNumber].correctAnswer;
-    
+
     if (answer === currentCorrectAnswer) {
       $("main").html(renderCorrectAnswerPage())
-    } else{
+    } else {
       $("main").html(renderIncorrectAnswerPage())
-    } 
-      store.questionNumber++;    
+    }
+    store.questionNumber++;
   })
   render();
 }
 //app should verify whether answer is correct
 function renderCorrectAnswerPage() {
   let correctAnswerPage = `<div class="content">
-  <h2>Correct</h2> <button id="next-question">Next Question</button></div>`
+  <h2>Correct</h2> <form> <button id="next-question">Next Question</button> </form> </div>`
   return correctAnswerPage;
 }
 
-function renderIncorrectAnswerPage(){
+function renderIncorrectAnswerPage() {
   let incorrectAnswerPage = `<div class="content">
-  <h2>Sorry Bud</h2> <p>The correct answer was ${store.questions[store.questionNumber].correctAnswer} better luck next time!</p> <button id="next-question">Next Question</button></div>`
+  <h2>Sorry Bud</h2> <p>The correct answer was ${store.questions[store.questionNumber].correctAnswer} better luck next time!</p> <form> <button id="next-question">Next Question</button> </form> </div>`
   return incorrectAnswerPage;
 }
 
-function handleNextQuestion(){
-  $(`main`).on(`click`, `#next-question`, function () {
-    store.questionNumber++;
+function handleNextQuestion() {
+  $(`main`).on(`click`, `#next-question`, function (e) {
+    e.preventDefault();
+    $("main").html(store.questions[store.questionNumber])
+    render();
+  })
+}
+
+function renderFinalPage() {
+  let finalPage = `<div class="content">
+  <h2>Fin</h2> <p>Your final score is ${store.score}/5... hope you are proud of yourself</p>
+   <button id="restart">Restart</button> </div>`
+  return finalPage;
+}
+
+function handleFinalPage() {
+  $(`main`).on(`click`, `#restart`, function () {
+    store.quizStarted = false;
+    store.questionNumber = 0;
+    store.score = 0;
     render();
   })
 }
@@ -133,12 +155,10 @@ function handleNextQuestion(){
 //A button to restart the quiz will be displayed on final page
 
 function render() {
-  console.log
   if (store.quizStarted === false) {
     $('main').html(renderStartPage());
   } else if (store.quizStarted) {
     $('main').html(questionPage());
-
   }
 }
 
@@ -146,7 +166,8 @@ function main() {
   render();
   handleStartQuiz();
   handleAnswerSubmit();
-  
+  handleNextQuestion();
+  handleFinalPage();
 }
 
 
