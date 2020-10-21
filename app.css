@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
-/*@import url('https://fonts.googleapis.com/css?family=Black+Ops+One');*/
+
+*{
+    box-sizing: border-box;
+}
+
 html{
     font-family: 'Orbitron', sans-serif;
     color: #3d3d3d;
@@ -21,13 +25,17 @@ main{
     align-items: center;
     justify-content: center; 
     background-color: rgba(242, 75, 30, 85%);
-    padding: 30px 40px;
+    padding: 30px 4.5%;
     width: 100%;
 }
 
 .content{
     width: 90%;
     margin: 0 auto;
+}
+
+.content img{
+    width: 100%;
 }
 
 button{

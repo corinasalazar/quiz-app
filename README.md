@@ -1,6 +1,3 @@
 # quiz-app
 
-__Programmed with__ 
-- Christopher Wylie
-- Arjay Jean
-- Corina Salazar
+My partners were Corina Salazar amd Arjay Jean
