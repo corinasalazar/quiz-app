@@ -1,46 +1,56 @@
 const store = {
-    questions: [
-       { question: "How many members were in Kill Bill's Deadly Viper Assassination Squad?",
-        answers: ["nine", "ten", "six", "seventeen"], 
-        correctAnswer: "six"},
+  questions: [
+    {
+      question: "How many members were in Kill Bill's Deadly Viper Assassination Squad?",
+      answers: ["nine", "ten", "six", "seventeen"],
+      correctAnswer: "six"
+    },
 
-        {question: "Who snapped the Infinity Gaunlet at the end of Avengers: Infinity War?",
-        answers: ["Thanos", "Ironman", "Hulk", "Spider-man"],
-        correctAnswer: "Thanos"},
+    {
+      question: "Who snapped the Infinity Gaunlet at the end of Avengers: Infinity War?",
+      answers: ["Thanos", "Ironman", "Hulk", "Spider-man"],
+      correctAnswer: "Thanos"
+    },
 
-        {question: "When was the first Rambo movie released?",
-        answers: ["1940", "1973", "1768", "1982"],
-        correctAnswer: "1982"},
+    {
+      question: "When was the first Rambo movie released?",
+      answers: ["1940", "1973", "1768", "1982"],
+      correctAnswer: "1982"
+    },
 
-        {question: " How many movies make up the Fast & Furious franchise so far?",
-        answers: ["nine", "ten", "seven", "twenty four"],
-        correctAnswer: "nine"},
+    {
+      question: " How many movies make up the Fast & Furious franchise so far?",
+      answers: ["nine", "ten", "seven", "twenty four"],
+      correctAnswer: "nine"
+    },
 
-        {question: "who played ryan in saving private ryan answer?",
-        answers: ["Matt Damon", "Tom Hardy", "Tom Hanks", "Paul Rudd"],
-        correctAnswer: "Matt Damon"},
-    ],
-    quizStarted: false,
-    questionNumber: 0,
-    score: 0,
+    {
+      question: "who played ryan in saving private ryan answer?",
+      answers: ["Matt Damon", "Tom Hardy", "Tom Hanks", "Paul Rudd"],
+      correctAnswer: "Matt Damon"
+    },
+  ],
+  quizStarted: false,
+  questionNumber: 0,
+  score: 0,
 };
 
-function renderStartPage(){
-    let startPage = 
+function renderStartPage() {
+  let startPage =
     `<div class="content">
       <h2>Here you GO!!</h2>
       <p>Are You Ready?</p>
       <button id="start">Get Started</button> 
     </div>`;
-    return startPage;
+  return startPage;
 }
 // quiz start page should render
 
 function handleStartQuiz() {
-    $(`main`).on(`click`, `#start`, function(){
-        store.quizStarted=true;
-        render();
-    })
+  $(`main`).on(`click`, `#start`, function () {
+    store.quizStarted = true;
+    render();
+  })
 }
 
 // you should be able to start the quiz by pressing a start button
@@ -48,9 +58,9 @@ function handleStartQuiz() {
 
 
 function questionPage() {
-    let currentQuestion = store.questions[store.questionNumber];
+  let currentQuestion = store.questions[store.questionNumber];
 
-    let questionPage = `
+  let questionPage = `
     <div class="content">
       <h2>${currentQuestion.question}</h2>
       <form>
@@ -71,24 +81,26 @@ function questionPage() {
     </div>
     `;
 
-    return questionPage;
+  return questionPage;
 }
 //you should be shown a question with a list of answers
 
-function handleAnswerSubmit(){
-    $("main").on("submit", "form", function(evt){
-      evt.preventDefault();
-        store.questionNumber++;
-        let answer = $(`input[name='answer']:checked`).val();
-        //if (answer === store.questions[])
-        render();
+function handleAnswerSubmit() {
+  $("main").on("submit", "form", function (evt) {
+    evt.preventDefault();
+    store.questionNumber++;
+    let answer = $(`input[name='answer']:checked`).val();
+    if (answer === store.questions[])
+      render();
 
-    })
+  })
 
 }
 
 //users should be able to select an answer
-
+function answerPage(){
+  if(answer === store.questions.correctAnswer)
+}
 
 
 //app should verify whether answer is correct
@@ -103,20 +115,20 @@ function handleAnswerSubmit(){
 
 //A button to restart the quiz will be displayed on final page
 
-function render(){
+function render() {
   console.log
-      if(store.quizStarted ===false){
-        $('main').html(renderStartPage());
-      } else if(store.quizStarted){
-        $('main').html(questionPage());
-      
-      }
+  if (store.quizStarted === false) {
+    $('main').html(renderStartPage());
+  } else if (store.quizStarted) {
+    $('main').html(questionPage());
+
+  }
 }
 
-function main(){
-    render();
-    handleStartQuiz();
-    handleAnswerSubmit();
+function main() {
+  render();
+  handleStartQuiz();
+  handleAnswerSubmit();
 
 }
 
